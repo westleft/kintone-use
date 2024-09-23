@@ -1,0 +1,32 @@
+{
+  "name": "kintone-use",
+  "private": false,
+  "version": "1.0.3",
+  "description": "A more user-friendly Kintone library.",
+  "author": "westleft",
+  "license": "MIT",
+  "type": "module",
+  "keywords": [
+    "kintone"
+  ],
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "@kintone/dts-gen": "^8.0.13",
+    "typescript": "^5.5.3",
+    "vite": "^5.4.1",
+    "vite-plugin-dts": "^4.2.1",
+    "vitest": "^2.1.1"
+  },
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist/",
+    "package.json",
+    "README.md"
+  ]
+}
