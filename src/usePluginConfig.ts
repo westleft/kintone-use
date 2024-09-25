@@ -4,10 +4,22 @@ type PluginResponse = {
   success: boolean
 }
 
+/**
+ * Manages plugin configuration.
+ * @returns {object} Methods for managing plugin configurations.
+ * @property {function(PluginConfig): Promise<PluginResponse>} setPluginConfig - Sets plugin config.
+ * @property {function(): PluginConfig} getPluginConfig - Gets current plugin config.
+ * @property {function(): boolean} hasPluginConfig - Checks if plugin config exists.
+ */
 export const usePluginConfig = () => {
   const pluginId = kintone.$PLUGIN_ID
 
-  const deserializeConfig = async (config: PluginConfig) => {
+  /**
+   * Sets the plugin configuration.
+   * @param {PluginConfig} config - Configuration object.
+   * @returns {Promise<PluginResponse>} Result of the operation.
+   */
+  const deserializeConfig = async (config: PluginConfig): Promise<PluginResponse> => {
     return new Promise<PluginResponse>((resolve) => {
       try {
         kintone.plugin.app.setConfig(config, () => {
@@ -24,7 +36,12 @@ export const usePluginConfig = () => {
     })
   }
 
-  const setPluginConfig = async (pluginConfig: PluginConfig) => {
+  /**
+   * Sets the plugin config.
+   * @param {PluginConfig} pluginConfig - Configuration object.
+   * @returns {Promise<PluginResponse>} Result of the operation.
+   */
+  const setPluginConfig = async (pluginConfig: PluginConfig): Promise<PluginResponse> => {
     const configKeys = Object.keys(pluginConfig)
 
     configKeys.forEach((item: keyof typeof pluginConfig) => {
@@ -34,22 +51,30 @@ export const usePluginConfig = () => {
     return await deserializeConfig(pluginConfig)
   }
 
-  const getPluginConfig = () => {
+  /**
+   * Retrieves the current plugin configuration.
+   * @returns {T} Parsed configuration or {} if an error occurs.
+   */
+  const getPluginConfig = <T = unknown>(): T => {
     try {
       const pluginConfig = kintone.plugin.app.getConfig(pluginId)
-      const configKeys = Object.keys(pluginConfig)
+      const keys = Object.keys(pluginConfig)
 
-      configKeys.forEach((item: keyof typeof pluginConfig) => {
+      keys.forEach((item: keyof typeof pluginConfig) => {
         pluginConfig[item] = JSON.parse(pluginConfig[item])
       })
 
-      return pluginConfig
+      return pluginConfig as T
     } catch (error) {
-      console.error('Error parsing JSON:', error)
-      return {}
+      console.warn('Error parsing JSON:', error)
+      return {} as T
     }
   }
 
+  /**
+   * Checks if the plugin config exists.
+   * @returns {boolean} True if exists, otherwise false.
+   */
   const hasPluginConfig = (): boolean => {
     const pluginConfig = kintone.plugin.app.getConfig(pluginId)
     const configKeys = Object.keys(pluginConfig)
