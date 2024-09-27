@@ -1,7 +1,7 @@
 {
   "name": "kintone-use",
   "private": false,
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "A more user-friendly Kintone library.",
   "author": "westleft",
   "license": "MIT",
@@ -23,6 +23,7 @@
   "devDependencies": {
     "@antfu/eslint-config": "^3.7.1",
     "@kintone/dts-gen": "^8.0.13",
+    "@types/node": "^22.7.3",
     "eslint": "^9.11.1",
     "typescript": "^5.5.3",
     "vite": "^5.4.1",
