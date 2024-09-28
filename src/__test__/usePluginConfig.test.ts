@@ -14,6 +14,8 @@ vi.stubGlobal('kintone', {
   },
 })
 
+vi.spyOn(console, 'warn').mockImplementation(() => undefined)
+
 const { getPluginConfig, setPluginConfig, hasPluginConfig } = usePluginConfig()
 
 describe('usePluginConfig', () => {
@@ -23,7 +25,17 @@ describe('usePluginConfig', () => {
 
   it('should return plugin config', () => {
     const config = getPluginConfig()
+
     expect(config).toBeDefined()
+  })
+
+  it('if config is invaild Json', () => {
+    pluginConfig = { key: 'value' }
+    const config = getPluginConfig()
+
+    expect(config).toEqual({
+      key: 'value',
+    })
   })
 
   it('should set plugin config', () => {

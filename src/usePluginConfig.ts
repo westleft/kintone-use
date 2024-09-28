@@ -11,9 +11,7 @@ type PluginResponse = {
  * @property {function(): PluginConfig} getPluginConfig - Gets current plugin config.
  * @property {function(): boolean} hasPluginConfig - Checks if plugin config exists.
  */
-export const usePluginConfig = () => {
-  const pluginId = kintone.$PLUGIN_ID
-
+export const usePluginConfig = (pluginId: string = kintone.$PLUGIN_ID) => {
   /**
    * Sets the plugin configuration.
    * @param {PluginConfig} config - Configuration object.
@@ -45,7 +43,11 @@ export const usePluginConfig = () => {
     const configKeys = Object.keys(pluginConfig)
 
     configKeys.forEach((item: keyof typeof pluginConfig) => {
-      pluginConfig[item] = JSON.stringify(pluginConfig[item])
+      try {
+        pluginConfig[item] = JSON.stringify(pluginConfig[item])
+      } catch (error) {
+        console.warn(`Failed to serialize ${item}, using original value instead:`, error)
+      }
     })
 
     return await deserializeConfig(pluginConfig)
@@ -61,7 +63,11 @@ export const usePluginConfig = () => {
       const keys = Object.keys(pluginConfig)
 
       keys.forEach((item: keyof typeof pluginConfig) => {
-        pluginConfig[item] = JSON.parse(pluginConfig[item])
+        try {
+          pluginConfig[item] = JSON.parse(pluginConfig[item])
+        } catch (e) {
+          console.warn(e)
+        }
       })
 
       return pluginConfig as T
