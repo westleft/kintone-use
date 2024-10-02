@@ -1,19 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { usePluginConfig } from '../usePluginConfig'
 
-let pluginConfig: Record<string, any> = {}
-
-vi.stubGlobal('kintone', {
-  plugin: {
-    app: {
-      setConfig: vi.fn((config: Record<string, any>) => {
-        pluginConfig = config
-      }),
-      getConfig: vi.fn(() => pluginConfig),
-    },
-  },
-})
-
 vi.spyOn(console, 'warn').mockImplementation(() => undefined)
 
 const { getPluginConfig, setPluginConfig, hasPluginConfig } = usePluginConfig()
