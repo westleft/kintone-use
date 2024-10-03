@@ -7,7 +7,7 @@ const { getPluginConfig, setPluginConfig, hasPluginConfig } = usePluginConfig()
 
 describe('usePluginConfig', () => {
   beforeEach(() => {
-    pluginConfig = {}
+    setPluginConfig({})
   })
 
   it('should return plugin config', () => {
@@ -17,7 +17,7 @@ describe('usePluginConfig', () => {
   })
 
   it('if config is invaild Json', () => {
-    pluginConfig = { key: 'value' }
+    setPluginConfig({ key: 'value' })
     const config = getPluginConfig()
 
     expect(config).toEqual({
