@@ -1,7 +1,7 @@
 {
   "name": "kintone-use",
   "private": false,
-  "version": "1.0.9",
+  "version": "1.0.10",
   "description": "A more user-friendly Kintone library.",
   "author": "westleft",
   "license": "MIT",
